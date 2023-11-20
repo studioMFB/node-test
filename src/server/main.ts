@@ -4,6 +4,8 @@
 // export const http = require('http');
 // export const express = require('express');
 import 'dotenv/config';// Needed to access ENV variables.
+import path, { dirname } from 'path'; 
+import url, { fileURLToPath } from 'url';
 // import http from 'http';
 // import { resolve } from 'path';
 import express from 'express';
@@ -16,8 +18,15 @@ async function startServer(): Promise<void>{
     const app = express();
     // const httpServer = http.createServer(app);
 
+    const __filename = fileURLToPath(import.meta.url);
+    const __dirname = dirname(__filename);
+
+    app.set('views', path.join(__dirname, "views"));
+    // app.set('view engine', 'vue');
+
     app.get('/', (req: any, res: any)=>{
-        res.send('Bonjour!');
+        // res.send('Bonjour!');
+        res.render('index');
     });
     
     app.listen(PORT, () =>{
